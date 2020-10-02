@@ -22,6 +22,10 @@ class Response {
     const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=525a21417ce04e3eacfb3eb434184295`);
     return response.json();
   }
+
+  update(obj) {
+    console.log(obj, 'hi');
+  }
 }
 
 export default Response;
