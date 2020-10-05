@@ -1,6 +1,6 @@
 import './app.scss';
-import Response from '../fetch';
 import Control from '../controlBlock';
+import Current from '../currentWeather';
 import Store from '../../store/store';
 import weatherReducer from '../../store/reducer';
 import {
@@ -10,12 +10,24 @@ import {
   changeLocation,
 } from '../../store/actions';
 
+export const initialState = {
+  configuration: {
+    lang: 'en',
+    temp: 'C',
+    city: {},
+    background: 'url',
+  },
+  geolocation: {},
+  weather: {},
+  time: {},
+};
+
 class App {
   constructor() {
-    this.response = new Response();
+    this.store = new Store(weatherReducer, initialState);
+    this.current = new Current(this.store.value);
     this.control = new Control();
-    this.store = new Store(weatherReducer);
-    this.store.subscribe(this.response);
+    this.subscribeToStore();
     this.render();
     this.control.elem.addEventListener('click', (event) => this.onClick(event));
   }
@@ -24,16 +36,7 @@ class App {
     this.elem = document.createElement('div');
     this.elem.classList.add('weather');
     this.elem.append(this.control.elem);
-  }
-
-  async getPhoto() {
-    const result = await this.response.fetchToPhotoApi();
-    return result.urls.small;
-  }
-
-  async getGeocoding() {
-    const result = await this.response.fetchToGeocodingApi('Moscow');
-    return result;
+    this.elem.append(this.current.elem);
   }
 
   onClick(event) {
@@ -51,6 +54,10 @@ class App {
       this.store.dispatch(changeLocation(input.value));
       input.value = '';
     }
+  }
+
+  subscribeToStore() {
+    this.store.subscribe(this.current);
   }
 }
 

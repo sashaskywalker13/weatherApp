@@ -33,6 +33,10 @@ class Control {
     `;
     this.elem.innerHTML = this.body;
   }
+
+  update(obj) {
+    console.log(obj);
+  }
 }
 
 export default Control;

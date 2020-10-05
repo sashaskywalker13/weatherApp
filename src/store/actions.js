@@ -5,11 +5,12 @@ export const fetchToGeolocationApi = async () => {
 
 export const fetchToWeatherApi = async (geometry) => {
   const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=9f70dfdbc57b46d3a2c112036203009&q=${geometry}&days=3`);
-  const { current, forecast } = await response.json();
+  const { current, forecast, location } = await response.json();
   const { forecastday } = forecast;
   return {
     current,
     forecastday,
+    location,
   };
 };
 
@@ -40,10 +41,11 @@ export const getLocation = async () => {
 
 export const getWeather = async (city) => {
   const { geometry } = await fetchToGeocodingApi(city);
-  const { current, forecastday } = await fetchToWeatherApi(geometry);
+  const { location, current, forecastday } = await fetchToWeatherApi(geometry);
   return {
     current,
     forecastday,
+    location,
   };
 };
 
