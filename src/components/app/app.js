@@ -1,6 +1,9 @@
 import './app.scss';
 import Control from '../controlBlock';
 import Current from '../currentWeather';
+import ThreeDay from '../threeDay';
+import Geolocation from '../geolocation';
+import ImageBlock from '../imageBlock';
 import Store from '../../store/store';
 import weatherReducer from '../../store/reducer';
 import {
@@ -10,23 +13,21 @@ import {
   changeLocation,
 } from '../../store/actions';
 
-export const initialState = {
+const initialState = {
   configuration: {
-    lang: 'en',
+    lang: 'ru',
     temp: 'C',
-    city: {},
-    background: 'url',
   },
-  geolocation: {},
-  weather: {},
-  time: {},
 };
 
 class App {
   constructor() {
     this.store = new Store(weatherReducer, initialState);
-    this.current = new Current(this.store.value);
+    this.current = new Current();
     this.control = new Control();
+    this.threeDay = new ThreeDay();
+    this.geolocation = new Geolocation();
+    this.imageBlock = new ImageBlock();
     this.subscribeToStore();
     this.render();
     this.control.elem.addEventListener('click', (event) => this.onClick(event));
@@ -37,6 +38,9 @@ class App {
     this.elem.classList.add('weather');
     this.elem.append(this.control.elem);
     this.elem.append(this.current.elem);
+    this.elem.append(this.imageBlock.elem);
+    this.elem.append(this.threeDay.elem);
+    this.elem.append(this.geolocation.elem);
   }
 
   onClick(event) {
@@ -58,6 +62,9 @@ class App {
 
   subscribeToStore() {
     this.store.subscribe(this.current);
+    this.store.subscribe(this.threeDay);
+    this.store.subscribe(this.geolocation);
+    this.store.subscribe(this.imageBlock);
   }
 }
 

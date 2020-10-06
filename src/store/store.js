@@ -1,5 +1,8 @@
+import init from './initialState';
+
 class Store {
   constructor(reducers, initialState = {}) {
+    this.initial();
     this.reducers = reducers;
     this.subscribers = [];
     this.state = this.reducers(initialState, {});
@@ -14,6 +17,12 @@ class Store {
     }
 
     this.state = this.reducers(this.state, action);
+    this.notifySubscribers();
+  }
+
+  async initial() {
+    const data = await init();
+    this.state = this.reducers(this.state, data);
     this.notifySubscribers();
   }
 

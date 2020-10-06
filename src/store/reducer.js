@@ -1,26 +1,13 @@
 // action { type: CHANGE_TEMP, payload: 'C'}
-import { fetchToGeocodingApi, fetchToGeolocationApi } from './actions';
-
-export const initialState = {
-  configuration: {
-    lang: 'en',
-    temp: 'C',
-    city: {},
-    background: 'url',
-  },
-  geolocation: {},
-  weather: {},
-  time: {},
-};
-
-export default function weatherReducer(state = initialState, action) {
-  switch (action.type) {
+export default function weatherReducer(state = {}, action) {
+  const { type, payload } = action;
+  switch (type) {
     case 'CHANGE_TEMP': {
       return {
         ...state,
         configuration: {
           ...state.configuration,
-          temp: action.payload,
+          temp: payload,
         },
       };
     }
@@ -29,7 +16,7 @@ export default function weatherReducer(state = initialState, action) {
         ...state,
         configuration: {
           ...state.configuration,
-          lang: action.payload,
+          lang: payload,
         },
       };
     }
@@ -38,7 +25,7 @@ export default function weatherReducer(state = initialState, action) {
         ...state,
         configuration: {
           ...state.configuration,
-          background: action.payload.urls.regular,
+          background: payload.urls.small,
         },
       };
     }
@@ -47,67 +34,67 @@ export default function weatherReducer(state = initialState, action) {
         ...state,
         configuration: {
           ...state.configuration,
-          city: action.payload.geolocation,
+          background: payload.configuration.background.urls.regular,
         },
-        geolocation: action.payload.geolocation,
+        geolocation: payload.geolocation,
         weather: {
           current: {
             description: {
-              text: action.payload.weather.current.condition.text,
-              icon: action.payload.weather.current.condition.icon,
+              text: payload.weather.current.condition.text,
+              icon: payload.weather.current.condition.icon,
             },
             feelslike: {
-              F: action.payload.weather.current.feelslike_f,
-              C: action.payload.weather.current.feelslike_c,
+              F: payload.weather.current.feelslike_f,
+              C: payload.weather.current.feelslike_c,
             },
-            windspeed: action.payload.weather.current.wind_kph,
-            humidity: action.payload.weather.current.humidity,
+            windspeed: payload.weather.current.wind_kph,
+            humidity: payload.weather.current.humidity,
           },
           forecast: {
             dayone: {
-              date: action.payload.weather.forecastday[0].date,
+              date: payload.weather.forecastday[0].date,
               description: {
-                text: action.payload.weather.forecastday[0].day.condition.text,
-                icon: action.payload.weather.forecastday[0].day.condition.icon,
+                text: payload.weather.forecastday[0].day.condition.text,
+                icon: payload.weather.forecastday[0].day.condition.icon,
               },
               avgtemp: {
-                F: action.payload.weather.forecastday[0].day.avgtemp_f,
-                C: action.payload.weather.forecastday[0].day.avgtemp_c,
+                F: payload.weather.forecastday[0].day.avgtemp_f,
+                C: payload.weather.forecastday[0].day.avgtemp_c,
               },
-              windspeed: action.payload.weather.forecastday[0].day.maxwind_kph,
-              humidity: action.payload.weather.forecastday[0].day.avghumidity,
+              windspeed: payload.weather.forecastday[0].day.maxwind_kph,
+              humidity: payload.weather.forecastday[0].day.avghumidity,
             },
             daytwo: {
-              date: action.payload.weather.forecastday[1].date,
+              date: payload.weather.forecastday[1].date,
               description: {
-                text: action.payload.weather.forecastday[1].day.condition.text,
-                icon: action.payload.weather.forecastday[1].day.condition.icon,
+                text: payload.weather.forecastday[1].day.condition.text,
+                icon: payload.weather.forecastday[1].day.condition.icon,
               },
               avgtemp: {
-                F: action.payload.weather.forecastday[1].day.avgtemp_f,
-                C: action.payload.weather.forecastday[1].day.avgtemp_c,
+                F: payload.weather.forecastday[1].day.avgtemp_f,
+                C: payload.weather.forecastday[1].day.avgtemp_c,
               },
-              windspeed: action.payload.weather.forecastday[1].day.maxwind_kph,
-              humidity: action.payload.weather.forecastday[1].day.avghumidity,
+              windspeed: payload.weather.forecastday[1].day.maxwind_kph,
+              humidity: payload.weather.forecastday[1].day.avghumidity,
             },
             daytree: {
-              date: action.payload.weather.forecastday[2].date,
+              date: payload.weather.forecastday[2].date,
               description: {
-                text: action.payload.weather.forecastday[2].day.condition.text,
-                icon: action.payload.weather.forecastday[2].day.condition.icon,
+                text: payload.weather.forecastday[2].day.condition.text,
+                icon: payload.weather.forecastday[2].day.condition.icon,
               },
               avgtemp: {
-                F: action.payload.weather.forecastday[2].day.avgtemp_f,
-                C: action.payload.weather.forecastday[2].day.avgtemp_c,
+                F: payload.weather.forecastday[2].day.avgtemp_f,
+                C: payload.weather.forecastday[2].day.avgtemp_c,
               },
-              windspeed: action.payload.weather.forecastday[2].day.maxwind_kph,
-              humidity: action.payload.weather.forecastday[2].day.avghumidity,
+              windspeed: payload.weather.forecastday[2].day.maxwind_kph,
+              humidity: payload.weather.forecastday[2].day.avghumidity,
             },
           },
         },
         time: {
-          current: action.payload.weather.location.localtime,
-          dayOfWeek: action.payload.weather.location.localtime_epoch,
+          current: payload.weather.location.localtime,
+          dayOfWeek: payload.weather.location.localtime_epoch,
         },
       };
     }

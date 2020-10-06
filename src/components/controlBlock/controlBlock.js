@@ -22,10 +22,10 @@ class Control {
         <button class="button__search">искать</button>
         </div>
         <div class="control__temperature">
-        <input type="radio" id="F" name="temperature" value="F"
-        checked>
+        <input type="radio" id="F" name="temperature" value="F">
         <label for="ru">фаренгейт</label>
-        <input type="radio" id="C" name="temperature" value="C">
+        <input type="radio" id="C" name="temperature" value="C"
+        checked>
         <label for="en">Цельсий</label>
         </div>
         <button class="control__background">смена фона</button>

@@ -23,6 +23,7 @@ export const fetchToGeocodingApi = async (city) => {
   try {
     const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=525a21417ce04e3eacfb3eb434184295`);
     const { results } = await response.json();
+    console.log(results);
     const { formatted, geometry } = results[0];
     const { lat, lng } = geometry;
     return {
@@ -35,8 +36,8 @@ export const fetchToGeocodingApi = async (city) => {
 };
 
 export const getLocation = async () => {
-  const result = await fetchToGeolocationApi();
-  return result;
+  const location = await fetchToGeolocationApi();
+  return location;
 };
 
 export const getWeather = async (city) => {
@@ -67,6 +68,9 @@ export const changeTemperature = (temp) => ({
 export const changeLocation = (location) => async () => ({
   type: 'CHANGE_LOCATION',
   payload: {
+    configuration: {
+      background: await fetchToPhotoApi(),
+    },
     geolocation: await fetchToGeocodingApi(location),
     weather: await getWeather(location),
   },
