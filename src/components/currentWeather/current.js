@@ -1,6 +1,7 @@
 import './current.scss';
 
 import { timer } from '../../lib/time';
+import { getDate, t, getSummary } from '../../lib/translate';
 
 class Current {
   constructor(state) {
@@ -25,30 +26,37 @@ class Current {
       weather,
       time,
     } = this.state;
-    const { description, feelslike, windspeed } = weather.current;
+    const {
+      description,
+      feelslike,
+      windspeed,
+      humidity,
+    } = weather.current;
     this.elem.innerHTML = `
-    <div class="location">
+    <div class="current__location">
       <h2>${geolocation.formatted}</h2>
     </div>
-    <div class="date">
-      <p>${time.current}</p>
-    </div>
-    <div class="icon">
-      <img src="${description.icon}"></img>
-    </div>
-    <div class="description">
-      <p>${description.text}</p>
-      <p>${feelslike[configuration.temp]}</p>
-      <p>${windspeed}</p>
-    </div>
-    <div class="time">
+    <div class="current__weather">
+      <div class="icon current__icon">
+        <img src="${description.icon}"></img>
+      </div>
+      <div class="current__description">
+        <p>${getSummary(description.text, configuration.lang)}</p>
+        <p>${t('Ощущается как', configuration.lang)} ${feelslike[configuration.temp]}°${configuration.temp}</p>
+        <p>${t('Ветер', configuration.lang)} ${windspeed} ${t('км/ч', configuration.lang)}</p>
+        <p>${t('Влажность', configuration.lang)} ${humidity}%</p>
+      </div>
+      <div class="current__date">
+        <p>${getDate(time.current, configuration.lang)}</p>
+      </div>
+      <div class="current__time"></div>
     </div>
     `;
     this.renderTime();
   }
 
   renderTime() {
-    const timeContainer = this.elem.querySelector('.time');
+    const timeContainer = this.elem.querySelector('.current__time');
     setInterval(() => {
       timeContainer.innerHTML = timer();
     }, 1000);
@@ -57,7 +65,6 @@ class Current {
   update(newState) {
     this.state = newState;
     this.bodyRender();
-    console.log(this.state);
   }
 }
 

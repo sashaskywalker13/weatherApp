@@ -1,5 +1,7 @@
 import './threeDay.scss';
 
+import { getDay } from '../../lib/translate';
+
 class TreeDay {
   constructor(state) {
     this.state = state;
@@ -24,14 +26,14 @@ class TreeDay {
     forecast.forEach((day) => {
       this.elem.innerHTML += `
       <div class="threeDay__block">
-        <div class="avgTemp">
-          <span>${day.avgtemp[configuration.temp]}</span>
+        <div class="threeDay__temp">
+          <span>${day.avgtemp[configuration.temp]}°${configuration.temp}</span>
         </div>
-        <div class="icon">
+        <div class="icon threeDay__icon">
           <img src="${day.description.icon}"></img>
         </div>
-        <div class="day">
-          <p>${day.date}</p>
+        <div class="threeday__date">
+          <p>${getDay(day.date, configuration.lang)}</p>
         </div>
       </div>
       `;

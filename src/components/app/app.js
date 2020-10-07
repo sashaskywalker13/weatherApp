@@ -65,6 +65,7 @@ class App {
     this.store.subscribe(this.threeDay);
     this.store.subscribe(this.geolocation);
     this.store.subscribe(this.imageBlock);
+    this.store.subscribe(this.control);
   }
 }
 

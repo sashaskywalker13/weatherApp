@@ -23,7 +23,6 @@ export const fetchToGeocodingApi = async (city) => {
   try {
     const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=525a21417ce04e3eacfb3eb434184295`);
     const { results } = await response.json();
-    console.log(results);
     const { formatted, geometry } = results[0];
     const { lat, lng } = geometry;
     return {
