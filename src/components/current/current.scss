@@ -7,8 +7,8 @@
   border-radius: 6px;
   box-sizing: border-box;
   box-shadow: 0px 10px 10px rgba(31, 32, 65, 0.3);
-  background: $Green;
-  color: $Dark-75;
+  background: $Green-ligth;
+  color: $Dark-50;
   &__location {
     font-family: Montserrat_bold;
     font-size: 20px;
@@ -26,7 +26,12 @@
   }
   &__time {
     width: 20%;
-    font-size: 36px;
-    font-weight: bold;
+    font-size: 46px;
+    font-family: Montserrat_bold;
+    animation: go-big-small 1s infinite;
   }
+}
+@keyframes go-big-small {
+  from { font-size: 45px; }
+  to { font-size: 46px; }
 }

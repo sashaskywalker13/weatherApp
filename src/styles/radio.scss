@@ -13,10 +13,10 @@
   &:checked {
     width: 20px;
     height: 20px;
-    background: linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+    background: linear-gradient(180deg, $Blue 0%, #8BA4F9 100%);
     background-clip: content-box;
     padding: 3px;
     border-radius: 10px;
-    border: 1px solid $Purple;
+    border: 1px solid $Blue;
   }
 }
