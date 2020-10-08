@@ -101,7 +101,7 @@ export default function weatherReducer(state = {}, action) {
           },
         },
         time: {
-          current: weather.location.localtime,
+          current: weather.location.localtime.split(' ')[0],
           dayOfWeek: weather.location.localtime_epoch,
         },
       };

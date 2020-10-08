@@ -35,8 +35,8 @@ export const createDate = (str) => {
   };
 };
 
-export const findPhraseInDictionary = (diction, word) => {
-  const object = diction.find((phrase) => phrase.en.match(word));
+export const findPhraseInDictionary = (item, word) => {
+  const object = item.find((phrase) => phrase.en.match(word));
   return object;
 };
 

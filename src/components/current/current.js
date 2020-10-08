@@ -54,7 +54,7 @@ class Current {
         <p>${translator('Влажность', lang)} ${humidity}%</p>
       </div>
       <div class="current__date">
-        <p>${getDate(time.dayOfWeek, lang)}</p>
+        <p>${getDate(time.current, lang)}</p>
       </div>
       <div class="current__time"></div>
     </div>
