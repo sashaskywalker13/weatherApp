@@ -12,7 +12,7 @@ export const fetchToGeolocationApi = async () => {
 };
 
 export const fetchToWeatherApi = async (geometry) => {
-  const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${KEY_FOR_WEATHER_API}&q=${geometry}&days=3`);
+  const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${KEY_FOR_WEATHER_API}&q=${geometry}&days=3`);
   const { current, forecast, location } = await response.json();
   const { forecastday } = forecast;
   return {
