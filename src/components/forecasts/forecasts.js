@@ -1,19 +1,20 @@
-import './threeDay.scss';
+import './forecasts.scss';
 
-import { getDay } from '../../lib/translate';
+import { getDay } from '../../lib/selectors';
+import loader from '../../lib/loader';
 
-class TreeDay {
+class Forecasts {
   constructor(state) {
     this.state = state;
     this.render();
   }
 
   render() {
+    // eslint-disable-next-line no-undef
     this.elem = document.createElement('div');
-    this.elem.classList.add('threeDay');
-    this.elem.innerHTML = 'threeDay';
+    this.elem.classList.add('forecasts');
     if (!this.state) {
-      this.elem.innerHTML = 'Загружаю';
+      this.elem.innerHTML = loader();
       return;
     }
     this.bodyRender();
@@ -25,14 +26,14 @@ class TreeDay {
     const forecast = Object.values(weather.forecast);
     forecast.forEach((day) => {
       this.elem.innerHTML += `
-      <div class="threeDay__block">
-        <div class="threeDay__temp">
+      <div class="forecasts__block">
+        <div class="forecasts__temp">
           <span>${day.avgtemp[configuration.temp]}°${configuration.temp}</span>
         </div>
-        <div class="icon threeDay__icon">
+        <div class="icon forecasts__icon">
           <img src="${day.description.icon}"></img>
         </div>
-        <div class="threeday__date">
+        <div class="forecasts__date">
           <p>${getDay(day.date, configuration.lang)}</p>
         </div>
       </div>
@@ -46,4 +47,4 @@ class TreeDay {
   }
 }
 
-export default TreeDay;
+export default Forecasts;

@@ -1,7 +1,7 @@
 // @import '~normalize.css';
 @import './fonts.scss';
-
-#map {
-  width: 400px;
-  height: 300px;
-}
+@import './color.scss';
+@import './loader.scss';
+@import './button.scss';
+@import './input.scss';
+@import './radio.scss';

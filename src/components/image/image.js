@@ -1,16 +1,19 @@
-import './imageBlock.scss';
+import './image.scss';
 
-class ImageBlock {
+import loader from '../../lib/loader';
+
+class Image {
   constructor(state) {
     this.state = state;
     this.render();
   }
 
   render() {
+    // eslint-disable-next-line no-undef
     this.elem = document.createElement('div');
     this.elem.classList.add('image');
     if (!this.state) {
-      this.elem.innerHTML = 'Загружаю';
+      this.elem.innerHTML = loader();
       return;
     }
     this.bodyRender();
@@ -18,8 +21,8 @@ class ImageBlock {
 
   bodyRender() {
     this.elem.innerHTML = '';
-    const { configuration } = this.state;
-    this.elem.style.background = `center/ cover no-repeat url(${configuration.background})`;
+    const { background } = this.state.configuration;
+    this.elem.style.background = `center/ cover no-repeat url(${background})`;
   }
 
   update(newState) {
@@ -28,4 +31,4 @@ class ImageBlock {
   }
 }
 
-export default ImageBlock;
+export default Image;

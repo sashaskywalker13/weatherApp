@@ -1,4 +1,4 @@
-import init from './initialState';
+import { initialization } from './actions';
 
 class Store {
   constructor(reducers, initialState = {}) {
@@ -21,9 +21,14 @@ class Store {
   }
 
   async initial() {
-    const data = await init();
-    this.state = this.reducers(this.state, data);
-    this.notifySubscribers();
+    try {
+      const data = await initialization();
+      this.state = this.reducers(this.state, data);
+      this.notifySubscribers();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
   }
 
   subscribe(subscriber) {
@@ -32,6 +37,12 @@ class Store {
 
   notifySubscribers() {
     this.subscribers.forEach((subscriber) => subscriber.update(this.state));
+    this.saveConftoLocalStorage();
+  }
+
+  saveConftoLocalStorage() {
+    // eslint-disable-next-line no-undef
+    localStorage.setItem('weather', JSON.stringify(this.value.configuration));
   }
 
   get value() {

@@ -1,7 +1,8 @@
 import mapboxgl from 'mapbox-gl';
+import { KEY_FOR_MAP } from '../store/keys';
 
 export default function createMap(lng, lat) {
-  mapboxgl.accessToken = 'pk.eyJ1IjoiYWxla3NhbmRybXVraGluIiwiYSI6ImNrZnBnaXMzZTAweWwydW8wd21za244b2sifQ.Fqqc6n0-ZGPyadGa7F0oNw';
+  mapboxgl.accessToken = KEY_FOR_MAP;
   const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
@@ -11,6 +12,7 @@ export default function createMap(lng, lat) {
 
   map.addControl(new mapboxgl.NavigationControl());
 
+  // eslint-disable-next-line no-unused-vars
   const marker = new mapboxgl.Marker()
     .setLngLat([lng, lat])
     .addTo(map);

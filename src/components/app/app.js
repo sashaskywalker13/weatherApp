@@ -1,11 +1,13 @@
 import './app.scss';
-import Control from '../controlBlock';
-import Current from '../currentWeather';
-import ThreeDay from '../threeDay';
+
+import Control from '../control';
+import Current from '../current';
+import Forecasts from '../forecasts';
 import Geolocation from '../geolocation';
-import ImageBlock from '../imageBlock';
+import Image from '../image';
 import Store from '../../store/store';
 import weatherReducer from '../../store/reducer';
+import { initialState } from '../../lib/selectors';
 import {
   changeAppLanguages,
   changesBackground,
@@ -13,48 +15,37 @@ import {
   changeLocation,
 } from '../../store/actions';
 
-const initialState = {
-  configuration: {
-    lang: 'ru',
-    temp: 'C',
-  },
-};
-
 class App {
   constructor() {
-    this.store = new Store(weatherReducer, initialState);
-    this.current = new Current();
-    this.control = new Control();
-    this.threeDay = new ThreeDay();
-    this.geolocation = new Geolocation();
-    this.imageBlock = new ImageBlock();
+    this.addComponents();
     this.subscribeToStore();
     this.render();
     this.control.elem.addEventListener('click', (event) => this.onClick(event));
   }
 
   render() {
+    // eslint-disable-next-line no-undef
     this.elem = document.createElement('div');
     this.elem.classList.add('weather');
     this.elem.append(this.control.elem);
     this.elem.append(this.current.elem);
-    this.elem.append(this.imageBlock.elem);
-    this.elem.append(this.threeDay.elem);
+    this.elem.append(this.image.elem);
+    this.elem.append(this.forecasts.elem);
     this.elem.append(this.geolocation.elem);
   }
 
-  onClick(event) {
-    if (event.target.classList.contains('control__background')) {
+  onClick({ target }) {
+    if (target.classList.contains('button__background')) {
       this.store.dispatch(changesBackground());
     }
-    if (event.target.name === 'language') {
-      this.store.dispatch(changeAppLanguages(event.target.value));
+    if (target.name === 'language') {
+      this.store.dispatch(changeAppLanguages(target.value));
     }
-    if (event.target.name === 'temperature') {
-      this.store.dispatch(changeTemperature(event.target.value));
+    if (target.name === 'temperature') {
+      this.store.dispatch(changeTemperature(target.value));
     }
-    if (event.target.classList.contains('button__search')) {
-      const input = this.elem.querySelector('.control__search');
+    if (target.classList.contains('button__search')) {
+      const input = this.elem.querySelector('.input__search');
       this.store.dispatch(changeLocation(input.value));
       input.value = '';
     }
@@ -62,10 +53,19 @@ class App {
 
   subscribeToStore() {
     this.store.subscribe(this.current);
-    this.store.subscribe(this.threeDay);
+    this.store.subscribe(this.forecasts);
     this.store.subscribe(this.geolocation);
-    this.store.subscribe(this.imageBlock);
+    this.store.subscribe(this.image);
     this.store.subscribe(this.control);
+  }
+
+  addComponents() {
+    this.store = new Store(weatherReducer, initialState());
+    this.current = new Current();
+    this.control = new Control();
+    this.forecasts = new Forecasts();
+    this.geolocation = new Geolocation();
+    this.image = new Image();
   }
 }
 

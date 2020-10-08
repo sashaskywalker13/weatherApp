@@ -1,5 +1,5 @@
-const languages = {
-  shortWeekDay: [
+const dictionary = {
+  shortDay: [
     { en: 'Sun', ru: 'Вс ' },
     { en: 'Mon', ru: 'Пн ' },
     { en: 'Tue', ru: 'Вт ' },
@@ -8,7 +8,7 @@ const languages = {
     { en: 'Fri', ru: 'Пт ' },
     { en: 'Sat', ru: 'Сб ' },
   ],
-  weekDay: [
+  fullDay: [
     { en: 'Sunday', ru: 'Воскресенье' },
     { en: 'Monday', ru: 'Понедельник' },
     { en: 'Tuesday', ru: 'Вторник' },
@@ -31,7 +31,7 @@ const languages = {
     { en: 'November', ru: 'Ноябрь' },
     { en: 'December', ru: 'Декабрь' },
   ],
-  dictinary: [
+  summary: [
     { en: 'Moderate or heavy snow with thunder', ru: 'Умеренный или сильный снег с грозой' },
     { en: 'Sunny', ru: 'Солнечно' },
     { en: 'Clear', ru: 'Ясно' },
@@ -66,24 +66,4 @@ const languages = {
   ],
 };
 
-export const getDate = (str, lang) => {
-  const date = new Date(str);
-  const [day, month, num, year] = date.toDateString().split(' ');
-  const newDate = languages.shortWeekDay.find((d) => d.en === day);
-  const newMonth = languages.month.find((m) => m.en.match(month));
-  return `${newDate[lang]} ${num} ${newMonth[lang]} ${year}`;
-};
-export const getDay = (str, lang) => {
-  const date = new Date(str);
-  const [day] = date.toDateString().split(' ');
-  const newDate = languages.shortWeekDay.find((d) => d.en === day);
-  return `${newDate[lang]}`;
-};
-export const getSummary = (str, lang) => {
-  const newDate = languages.dictinary.find((w) => w.en === str);
-  return newDate[lang];
-};
-export const t = (word, lang) => {
-  const transWord = languages.dictinary.find((w) => w.ru.toLowerCase() === word.toLowerCase());
-  return transWord[lang];
-};
+export default dictionary;

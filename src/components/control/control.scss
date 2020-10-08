@@ -1,0 +1,35 @@
+@import '../../styles/color.scss';
+
+.control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 60%;
+  height: 300px;
+  border: 1px solid $Dark-25;
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow: 0px 10px 10px rgba(31, 32, 65, 0.3);
+  padding: 30px;
+  &__search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  &__languages {
+    display: flex;
+    align-items: center;
+  }
+  &__temperature {
+    display: flex;
+    align-items: center;
+  }
+}
+.input__search {
+  width: 70%;
+}
+.button__search {
+  width: 30%;
+  margin-left: 2rem;
+}

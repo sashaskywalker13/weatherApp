@@ -1,7 +1,12 @@
 import './current.scss';
 
-import { timer } from '../../lib/time';
-import { getDate, t, getSummary } from '../../lib/translate';
+import loader from '../../lib/loader';
+import {
+  timer,
+  getDate,
+  translator,
+  getSummary,
+} from '../../lib/selectors';
 
 class Current {
   constructor(state) {
@@ -10,10 +15,11 @@ class Current {
   }
 
   render() {
+    // eslint-disable-next-line no-undef
     this.elem = document.createElement('div');
     this.elem.classList.add('current');
     if (!this.state) {
-      this.elem.innerHTML = 'Загружаю';
+      this.elem.innerHTML = loader();
       return;
     }
     this.bodyRender();
@@ -32,6 +38,7 @@ class Current {
       windspeed,
       humidity,
     } = weather.current;
+    const { lang, temp } = configuration;
     this.elem.innerHTML = `
     <div class="current__location">
       <h2>${geolocation.formatted}</h2>
@@ -41,13 +48,13 @@ class Current {
         <img src="${description.icon}"></img>
       </div>
       <div class="current__description">
-        <p>${getSummary(description.text, configuration.lang)}</p>
-        <p>${t('Ощущается как', configuration.lang)} ${feelslike[configuration.temp]}°${configuration.temp}</p>
-        <p>${t('Ветер', configuration.lang)} ${windspeed} ${t('км/ч', configuration.lang)}</p>
-        <p>${t('Влажность', configuration.lang)} ${humidity}%</p>
+        <p>${getSummary(description.text, lang)}</p>
+        <p>${translator('Ощущается как', lang)} ${feelslike[temp]}°${temp}</p>
+        <p>${translator('Ветер', lang)} ${windspeed} ${translator('км/ч', lang)}</p>
+        <p>${translator('Влажность', lang)} ${humidity}%</p>
       </div>
       <div class="current__date">
-        <p>${getDate(time.current, configuration.lang)}</p>
+        <p>${getDate(time.dayOfWeek, lang)}</p>
       </div>
       <div class="current__time"></div>
     </div>
